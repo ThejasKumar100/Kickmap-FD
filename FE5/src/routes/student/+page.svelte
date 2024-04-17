@@ -1,5 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import { onMount } from 'svelte';
+
     
     export let data: PageData;
     let profileName = 'student';
@@ -9,9 +11,14 @@
     let description = 'Brief bio or description goes here...';
 
     function saveChanges() {
-        // You can add code here to save the changes
-        alert('Changes saved successfully!');
-    }
+        const profileData = {
+            name: profileName,
+            email: profileEmail,
+            major: major,
+            year: year,
+            description: description
+        }
+    };
 
 </script>
 
@@ -150,6 +157,7 @@
         <textarea class="profile-description" bind:value={description}></textarea>
     </div>
     
+    <button id="saveChangesButton" on:click={saveChanges}>Save Changes</button>
     
 </div>
 </body>

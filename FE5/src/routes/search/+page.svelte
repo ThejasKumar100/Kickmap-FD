@@ -1,6 +1,9 @@
 <script lang="ts">
-    import type { PageData } from './$types';
-    
+  import type { PageData } from '../$types';  
+  import { db } from '../../firebaseConfig';
+  import { collection, addDoc } from 'firebase/firestore';
+
+
     export let data: PageData;
   // TypeScript script will go here
   let eventName: string = '';
@@ -11,9 +14,23 @@
   let eventRSVPLink: string = '';
   
   // Function to handle the form submission
-  const submitForm = () => {
-    // Implement form submission logic here
-    console.log('Form submitted');
+  const submitForm = async () => {
+    console.log('Submitting form...');
+    try {
+      const docRef = await addDoc(collection(db, 'events'), {
+        eventName,
+        eventDate,
+        eventTime,
+        eventLocation,
+        eventDescription,
+        eventRSVPLink,
+      });
+      console.log('Document written with ID: ', docRef.id);
+      alert('Event successfully submitted!');
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      alert('Error submitting event.');
+    }
   };
 </script>
 

@@ -1,6 +1,8 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    
+    import { db } from '../../firebaseConfig';
+    import { collection, addDoc } from 'firebase/firestore';
+
     export let data: PageData;
   // TypeScript script will go here
   let eventName: string = '';
@@ -9,12 +11,23 @@
   let eventLocation: string = '';
   let eventDescription: string = '';
   let eventRSVPLink: string = '';
+  let eventFlyer: File | null = null;
   
   // Function to handle the form submission
   const submitForm = () => {
-    // Implement form submission logic here
-    console.log('Form submitted');
+    const formData = new FormData();
+    formData.append('eventName', eventName);
+    formData.append('eventDate', eventDate);
+    formData.append('eventTime', eventTime);
+    formData.append('eventLocation', eventLocation);
+    formData.append('eventDescription', eventDescription);
+    formData.append('eventRSVPLink', eventRSVPLink);
+    
+    if (eventFlyer) {
+      formData.append('eventFlyer', eventFlyer);
+    }
   };
+
 </script>
 
 <style>
