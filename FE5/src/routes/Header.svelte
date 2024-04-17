@@ -1,39 +1,63 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+	// import logo from '$lib/images/svelte-logo.svg';
+	// import github from '$lib/images/github.svg';
+	import pfp from '$lib/images/user-profile-icon.svg';
 </script>
 
 <header>
+	<!-- Created a Svelte icon and link-jump in top left corner -->
 	<div class="corner">
-		<a href="https://kit.svelte.dev">
+		<!-- <a href="https://kit.svelte.dev">
 			<img src={logo} alt="SvelteKit" />
-		</a>
+		</a> -->
 	</div>
 
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
+
+		<!-- Hotbar labels -->
 		<ul>
+			<!-- Home -->
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Home</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about">About</a>
+
+			<!-- Map -->
+			<li aria-current={$page.url.pathname === '/map' ? 'page' : undefined}>
+				<a href="/map">Map</a>
 			</li>
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
+
+			<!-- Search -->
+			<li aria-current={$page.url.pathname === '/search' ? 'page' : undefined}>
+				<a href="/search">Search</a>
+			</li>
+
+			<!-- Calendar -->
+			<li aria-current={$page.url.pathname === '/calendar' ? 'page' : undefined}>
+				<a href="/calendar">Calendar</a>
+			</li>
+
+
+			<!-- Example -->
+			<!-- <li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
 				<a href="/sverdle">Sverdle</a>
-			</li>
+			</li> -->
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
 		</svg>
 	</nav>
 
+	<!-- Created a Github icon and link-jump in top right corner -->
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
+		<!-- <a href="https://github.com/sveltejs/kit">
 			<img src={github} alt="GitHub" />
+		</a> -->
+		<a href="/student">
+			<img src={pfp} alt="Profile" />
 		</a>
 	</div>
 </header>
@@ -45,10 +69,11 @@
 	}
 
 	.corner {
-		width: 3em;
-		height: 3em;
+		width: 5em;
+		height: 5em;
 	}
 
+	/* CornerA and CornerImg methods are for the svelte and github corner icons */
 	.corner a {
 		display: flex;
 		align-items: center;
@@ -58,15 +83,16 @@
 	}
 
 	.corner img {
-		width: 2em;
-		height: 2em;
+		width: 3em;
+		height: 3em;
 		object-fit: contain;
 	}
 
 	nav {
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
+		/* --background: rgba(255, 255, 255, 0.7); */
+		--background: #EC7524;
 	}
 
 	svg {
@@ -107,6 +133,7 @@
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
 		border-top: var(--size) solid var(--color-theme-1);
+		/* border-top: var(--size) solid var(white); */
 	}
 
 	nav a {
@@ -125,5 +152,6 @@
 
 	a:hover {
 		color: var(--color-theme-1);
+		/* color: var(white); */
 	}
 </style>

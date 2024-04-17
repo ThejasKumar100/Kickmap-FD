@@ -1,6 +1,7 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
+	// import Counter from './Counter.svelte';
+	// import welcome from '$lib/images/svelte-welcome.webp';
+	import kickMapLogo from '$lib/images/kickMapLogo.png';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 </script>
 
@@ -13,7 +14,7 @@
 	<h1>
 		<span class="welcome">
 			<picture>
-				<source srcset={welcome} type="image/webp" />
+				<source srcset={kickMapLogo} type="image/webp" />
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
@@ -25,7 +26,7 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
 
-	<Counter />
+	<!-- <Counter /> -->
 </section>
 
 <style>
@@ -45,8 +46,9 @@
 		display: block;
 		position: relative;
 		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
+		height: 100%;
+		/* margin-left: 300px; */
+		padding: 0 0 calc(100% * 333 / 1400) 0;
 	}
 
 	.welcome img {
