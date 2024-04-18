@@ -1,36 +1,38 @@
 <script lang="ts">
   import type { PageData } from '../$types';  
   import { db } from '../../firebaseConfig';
-  import { collection, addDoc } from 'firebase/firestore';
+  import { collection, query, where, getDocs } from 'firebase/firestore';
 
 
     export let data: PageData;
   // TypeScript script will go here
-  let eventName: string = '';
-  let eventDate: string = '';
-  let eventTime: string = '';
-  let eventLocation: string = '';
-  let eventDescription: string = '';
-  let eventRSVPLink: string = '';
-  
+  let keyword: string = '';
+  let selectedSchool: string = '';
+  let selectedType: string = '';
+  let selectedLocation: string = '';
+  let selectedCategory: string = '';
+  let events: any[] = [];
+
   // Function to handle the form submission
-  const submitForm = async () => {
-    console.log('Submitting form...');
-    try {
-      const docRef = await addDoc(collection(db, 'events'), {
-        eventName,
-        eventDate,
-        eventTime,
-        eventLocation,
-        eventDescription,
-        eventRSVPLink,
-      });
-      console.log('Document written with ID: ', docRef.id);
-      alert('Event successfully submitted!');
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      alert('Error submitting event.');
+  const searchEvents = async () => {
+    let q = query(collection(db, 'events'));
+    if (keyword) {
+      q = query(q, where("eventName", "==", keyword));
     }
+    if (selectedSchool) {
+      q = query(q, where("eventSchool", "==", selectedSchool));
+    }
+    if (selectedType) {
+      q = query(q, where("eventType", "==", selectedType));
+    }
+    if (selectedLocation) {
+      q = query(q, where("eventLocation", "==", selectedLocation));
+    }
+    if (selectedCategory) {
+      q = query(q, where("eventCategory", "==", selectedCategory));
+    }
+    const querySnapshot = await getDocs(q);
+    events = querySnapshot.docs.map(doc => doc.data());
   };
 </script>
 
@@ -110,11 +112,22 @@
   display: block;
 }
 
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+
 .dropdown-content a:hover {background-color: #ddd;}
 
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #ff8c00;}
+
+
 </style>
 
 <div class="event-search-container">
@@ -122,88 +135,59 @@
     Search Events
   </div>
 
-  <form on:submit|preventDefault={submitForm}>
-    <label for="eventName">Keyword:</label>
-    <input id="eventName" type="text" bind:value={eventName} required>
+  <form on:submit|preventDefault={searchEvents}>
+    <label for="keyword">Keyword:</label>
+    <input id="keyword" type="text" bind:value={keyword}>
 
-  <label for="eventName">School:</label>
-    <div class="dropdown">
-        <button class="dropbtn">Select an option:</button>
-        <div class="dropdown-content">
-            <a href="#">University of Texas at Dallas</a>
-        </div>
-      </div>
+    <label for="school">School:</label>
+    <select id="school" bind:value={selectedSchool}>
+      <option value="">All Schools</option>
+      <option value="University of Texas at Dallas">University of Texas at Dallas</option>
+      <!-- Add other options here -->
+    </select>
 
-  <label for="eventName">Type:</label>
+    <label for="type">Type:</label>
+    <select id="type" bind:value={selectedType}>
+      <option value="">All Types</option>
+      <option value="Educational">Educational</option>
+      <option value="Fundraiser">Fundraiser</option>
+      <!-- Add other options here -->
+    </select>
 
-  <div class="dropdown">
-   <button class="dropbtn">Type</button>
-    <div class="dropdown-content">
-            <a href="#">Educational</a>
-            <a href="#">Fundraiser</a>
-        </div>
-   </div>
+    <label for="location">Location:</label>
+    <select id="location" bind:value={selectedLocation}>
+      <option value="">All Locations</option>
+      <option value="ECSS">ECSS</option>
+      <option value="ECSW">ECSW</option>
+      <option value="JSOM">JSOM</option>
+      <!-- Add other options here -->
+    </select>
 
-  <label for="eventName">Location:</label>
+    <label for="category">Category:</label>
+    <select id="category" bind:value={selectedCategory}>
+      <option value="">All Categories</option>
+      <option value="CS">Computer Science</option>
+      <option value="Business">Business</option>
+      <!-- Add other options here -->
+    </select>
 
-  <div class="dropdown">
-   <button class="dropbtn">Select an option:</button>
-    <div class="dropdown-content">
-            <a href="#">ECSS</a>
-            <a href="#">ECSW</a>
-            <a href="#">JSOM</a>
-        </div>
-   </div>
-
-  <label for="eventName">Begin Time:</label>
-  <div class="dropdown">
-   <button class="dropbtn">Select an option:</button>
-    <div class="dropdown-content">
-            <a href="#">8:00 a.m.</a>
-            <a href="#">9:00 a.m.</a>
-            <a href="#">10:00 a.m.</a>
-            <a href="#">11:00 a.m.</a>
-            <a href="#">12:00 p.m.</a>
-            <a href="#">1:00 p.m.</a>
-            <a href="#">2:00 p.m.</a>
-            <a href="#">3:00 p.m.</a>
-            <a href="#">4:00 p.m.</a>
-            <a href="#">5:00 p.m.</a>
-            <a href="#">6:00 p.m.</a>
-            <a href="#">7:00 p.m.</a>
-            <a href="#">8:00 p.m.</a>
-        </div>
- </div>
-
- <label for="eventName">End Time:</label>
-  <div class="dropdown">
-   <button class="dropbtn">Select an option:</button>
-    <div class="dropdown-content">
-            <a href="#">8:00 a.m.</a>
-            <a href="#">9:00 a.m.</a>
-            <a href="#">10:00 a.m.</a>
-            <a href="#">11:00 a.m.</a>
-            <a href="#">12:00 p.m.</a>
-            <a href="#">1:00 p.m.</a>
-            <a href="#">2:00 p.m.</a>
-            <a href="#">3:00 p.m.</a>
-            <a href="#">4:00 p.m.</a>
-            <a href="#">5:00 p.m.</a>
-            <a href="#">6:00 p.m.</a>
-            <a href="#">7:00 p.m.</a>
-            <a href="#">8:00 p.m.</a>
-        </div>
- </div>
-
-  <label for="eventName">Category:</label>
-  <div class="dropdown">
-        <button class="dropbtn">Select an option:</button>
-        <div class="dropdown-content">
-            <a href="#">CS</a>
-            <a href="#">Business</a>
-        </div>
-    </div>
-<br />
-    <button class="submit-button" type="submit">Submit</button>
+    <button class="submit-button" type="submit">Search</button>
   </form>
+
+  <!-- Display search results -->
+  {#each events as event}
+    <div>
+      <h3>{event.eventName}</h3>
+      <p>{event.eventDate}</p>
+      <p>{event.eventLocation}</p>
+      <p>{event.eventDescription}</p>
+      <p>{event.eventCategory}</p>
+      <p>{event.eventLocation}</p>
+      <p>{event.eventRSVPLink}</p>
+      <p>{event.eventSchool}</p>
+      <p>{event.eventTime}</p>
+      <p>{event.eventType}</p>
+
+    </div>
+  {/each}
 </div>

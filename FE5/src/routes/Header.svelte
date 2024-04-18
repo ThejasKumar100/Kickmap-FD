@@ -40,6 +40,12 @@
 				<a href="/calendar">Calendar</a>
 			</li>
 
+			<!-- Create Event -->
+			<li aria-current={$page.url.pathname === '/createEvent' ? 'page' : undefined}>
+				<a href="/createEvent">Create</a>
+			</li>
+			
+
 
 			<!-- Example -->
 			<!-- <li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>

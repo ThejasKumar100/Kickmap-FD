@@ -2,6 +2,8 @@
     import type { PageData } from './$types';
     import { db } from '../../firebaseConfig';
     import { collection, addDoc } from 'firebase/firestore';
+    import { getStorage, ref, uploadBytes } from 'firebase/storage'; // Import missing functions
+
 
     export let data: PageData;
   // TypeScript script will go here
@@ -13,20 +15,43 @@
   let eventRSVPLink: string = '';
   let eventFlyer: File | null = null;
   
+  function handleFileChange(event: Event) { 
+    const input = event.target as HTMLInputElement; 
+    if (input.files) {
+      eventFlyer = input.files[0];
+    }
+  }
+
   // Function to handle the form submission
-  const submitForm = () => {
-    const formData = new FormData();
-    formData.append('eventName', eventName);
-    formData.append('eventDate', eventDate);
-    formData.append('eventTime', eventTime);
-    formData.append('eventLocation', eventLocation);
-    formData.append('eventDescription', eventDescription);
-    formData.append('eventRSVPLink', eventRSVPLink);
-    
-    if (eventFlyer) {
-      formData.append('eventFlyer', eventFlyer);
+  const submitForm = async () => {
+    try {
+      const docRef = await addDoc(collection(db, 'events'), {
+        eventName,
+        eventDate,
+        eventTime,
+        eventLocation,
+        eventDescription,
+        eventRSVPLink,
+        // TODO: Store path or URL to the file in Firebase Storage
+      });
+      console.log('Document written with ID: ', docRef.id);
+      if (eventFlyer) {
+        const storage = getStorage();
+        const storageRef = ref(storage, `flyers/${docRef.id}/${eventFlyer.name}`);
+        await uploadBytes(storageRef, eventFlyer).then((snapshot) => {
+          console.log('Uploaded a file!');
+        });
+
+        // TODO: update the document with the flyer's URL
+      }
+
+      alert('Event successfully submitted!');
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      alert('Error submitting event.');
     }
   };
+
 
 </script>
 
@@ -100,7 +125,7 @@
     <input id="eventRSVPLink" type="url" bind:value={eventRSVPLink}>
 
     <label for="eventFlyer">Digital Flyer/Poster:</label>
-    <input id="eventFlyer" type="file">
+    <input id="eventFlyer" type="file" on:change={handleFileChange}>
 
     <button class="submit-button" type="submit">Submit</button>
   </form>
