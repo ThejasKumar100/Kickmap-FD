@@ -2,15 +2,16 @@
 	import { page } from '$app/stores';
 	// import logo from '$lib/images/svelte-logo.svg';
 	// import github from '$lib/images/github.svg';
+	import plusPic from '$lib/images/plus.png';
 	import pfp from '$lib/images/user-profile-icon.svg';
 </script>
 
 <header>
 	<!-- Created a Svelte icon and link-jump in top left corner -->
 	<div class="corner">
-		<!-- <a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a> -->
+		<a href="/createEvent">
+			<img src={plusPic} alt="CreateEvent" />
+		</a>
 	</div>
 
 	<nav>
