@@ -14,18 +14,18 @@
 	<h1>
 		<span class="welcome">
 			<picture>
-				<source srcset={kickMapLogo} type="image/webp" />
+				<source srcset={kickMapLogo} type="image/webp"/>
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
 
-		<!-- to your new<br />SvelteKit app -->
+		KickMap<br />
 	</h1>
 
 	<h2>
-		<!-- try editing <strong>src/routes/+page.svelte</strong> -->
+		All campus events <strong>In one place.</strong>
 	</h2>
-
+	
 	<!-- <Counter /> -->
 </section>
 
@@ -52,10 +52,8 @@
 	}
 
 	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
 		display: block;
+		margin-left: auto;
+		margin-right: auto;
 	}
 </style>
