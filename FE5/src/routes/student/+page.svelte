@@ -1,22 +1,31 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { onMount } from 'svelte';
-
+    import { db } from '../../firebaseConfig';
+    import { collection, addDoc } from 'firebase/firestore';
     
     export let data: PageData;
-    let profileName = 'student';
-    let profileEmail = 'student@example.com';
-    let major = 'Computer Science';
-    let year = 'Junior';
-    let description = 'Brief bio or description goes here...';
+    let profileName = '';
+    let profileEmail = '';
+    let major = '';
+    let year = '';
+    let description = '';
+    const years = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
 
-    function saveChanges() {
+    async function saveChanges() {
         const profileData = {
             name: profileName,
             email: profileEmail,
             major: major,
             year: year,
             description: description
+        };
+        try {
+            await addDoc(collection(db, "student"), profileData);
+            alert("Your information has been saved!");
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            alert("Failed to save data.");
         }
     };
 
@@ -123,42 +132,44 @@
 </style>
 
 <body>
-<div class="navbar">
-    <div class="burger-menu">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-    <div class="page-name">Student Profile</div>
-</div>
-
-<div class="profile-container">
-    <div class="profile-photo">
-        <img src="https://research.utdallas.edu/app/themes/utdresearchtheme/assets/images/logo.png?last_modified=1667557382" alt="Profile Photo">
-    </div>
-    <div class="profile-info">
-        <div class="profile-label">Student Name:</div>
-        <div class="info-box">{profileName}</div>
-    </div>
-    <div class="profile-info">
-        <div class="profile-label">Student Email:</div>
-        <div class="info-box">{profileEmail}</div>
-    </div>
-    <div class="profile-info">
-        <div class="profile-label">Major:</div>
-        <div class="info-box">{major}</div>
-    </div>
-    <div class="profile-info">
-        <div class="profile-label">Year:</div>
-        <div class="info-box">{year}</div>
-    </div>
-    <div class="profile-info">
-        <div class="profile-label">Description:</div>
-        <textarea class="profile-description" bind:value={description}></textarea>
+    <div class="navbar">
+        <div class="burger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="page-name">Student Profile</div>
     </div>
     
-    <button id="saveChangesButton" on:click={saveChanges}>Save Changes</button>
-    
-</div>
-</body>
-
+    <div class="profile-container">
+        <div class="profile-photo">
+            <img src="https://research.utdallas.edu/app/themes/utdresearchtheme/assets/images/logo.png?last_modified=1667557382" alt="Profile Photo">
+        </div>
+        <div class="profile-info">
+            <label class="profile-label">Student Name:</label>
+            <input class="info-box" bind:value={profileName} placeholder="Enter your name">
+        </div>
+        <div class="profile-info">
+            <label class="profile-label">Student Email:</label>
+            <input class="info-box" bind:value={profileEmail} type="email" placeholder="Enter your email">
+        </div>
+        <div class="profile-info">
+            <label class="profile-label">Major:</label>
+            <input class="info-box" bind:value={major} placeholder="Enter your major">
+        </div>
+        <div class="profile-info">
+            <label class="profile-label">Year:</label>
+            <select class="info-box" bind:value={year}>
+                {#each years as y}
+                    <option value={y}>{y}</option>
+                {/each}
+            </select>
+        </div>
+        <div class="profile-info">
+            <label class="profile-label">Description:</label>
+            <textarea class="profile-description" bind:value={description}></textarea>
+        </div>
+        
+        <button id="saveChangesButton" on:click={saveChanges}>Save Changes</button>
+    </div>
+    </body>
