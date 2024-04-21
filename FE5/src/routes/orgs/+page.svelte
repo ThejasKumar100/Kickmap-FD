@@ -7,7 +7,7 @@
     interface Event {
     title: string;
     description: string;
-    date: string;
+    //date: string;
     location: string;
   }
 
@@ -55,7 +55,6 @@
       <div class="event-card">
         <h3>{event.title}</h3>
         <p>{event.description}</p>
-        <span>{event.date}</span>
         <span>{event.location}</span>
         <button class="button-primary">More Details</button>
       </div>
