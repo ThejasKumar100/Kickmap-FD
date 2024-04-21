@@ -45,8 +45,13 @@
 			<li aria-current={$page.url.pathname === '/createEvent' ? 'page' : undefined}>
 				<a href="/createEvent">Create</a>
 			</li>
-			
 
+			<!-- Org Page -->
+			<li aria-current={$page.url.pathname === '/orgs' ? 'page' : undefined}>
+				<a href="/orgs">Organizations</a>
+			</li>
+			
+			
 
 			<!-- Example -->
 			<!-- <li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
@@ -73,6 +78,9 @@
 	header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
+		background: #EC7524;
+		padding: 0.5rem;
 	}
 
 	.corner {
