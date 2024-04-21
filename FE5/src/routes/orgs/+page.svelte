@@ -55,7 +55,7 @@
       <div class="event-card">
         <h3>{event.title}</h3>
         <p>{event.description}</p>
-        <span>{event.location}</span>
+        <span>Location: {event.location}</span>
         <button class="button-primary">More Details</button>
       </div>
     {/each}
