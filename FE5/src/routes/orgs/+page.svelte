@@ -36,6 +36,10 @@
       border-radius: 8px;
     }
     .button-primary {
+      /* position: center; */
+      margin: 0 auto;
+      display: block;
+      
       background-color: #FFA500;
       border: none;
       padding: 10px 20px;
