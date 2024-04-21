@@ -19,7 +19,8 @@
 			</picture>
 		</span>
 
-		KickMap<br />
+		KickMap
+		<br />
 	</h1>
 
 	<h2>
