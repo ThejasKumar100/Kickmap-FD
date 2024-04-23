@@ -35,6 +35,10 @@
       border-radius: 8px;
     }
     .button-primary {
+      /* position: center; */
+      margin: 0 auto;
+      display: block;
+      
       background-color: #FFA500;
       border: none;
       padding: 10px 20px;
@@ -50,7 +54,7 @@
       <div class="event-card">
         <h3>{event.title}</h3>
         <p>{event.description}</p>
-        <span>{event.location}</span>
+        <span>Location: {event.location}</span>
         <div>
           <button class="button-primary">More Details</button>
         </div>
