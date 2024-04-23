@@ -7,7 +7,6 @@
     interface Event {
     title: string;
     description: string;
-    //date: string;
     location: string;
   }
 
@@ -52,7 +51,9 @@
         <h3>{event.title}</h3>
         <p>{event.description}</p>
         <span>{event.location}</span>
-        <button class="button-primary">More Details</button>
+        <div>
+          <button class="button-primary">More Details</button>
+        </div>
       </div>
     {/each}
   </div>

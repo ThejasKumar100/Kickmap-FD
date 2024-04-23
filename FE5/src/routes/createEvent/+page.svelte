@@ -10,10 +10,18 @@
   let eventName: string = '';
   let eventDate: string = '';
   let eventTime: string = '';
+  let eventCategory: string = '';
+  let eventHost: string = '';
+  let eventSchool: string = '';
+  let eventType: string = '';
   let eventLocation: string = '';
   let eventDescription: string = '';
   let eventRSVPLink: string = '';
   let eventFlyer: File | null = null;
+
+  let categories = ['Conference', 'Seminar', 'Workshop', 'Social'];
+  let schools = ['School of Engineering', 'School of Business', 'School of Arts'];
+  let eventTypes = ['Public', 'Private', 'Online', 'Hybrid'];
   
   function handleFileChange(event: Event) { 
     const input = event.target as HTMLInputElement; 
@@ -32,6 +40,11 @@
         eventLocation,
         eventDescription,
         eventRSVPLink,
+        eventCategory,
+        eventHost,
+        eventSchool,
+        eventType,
+
         // TODO: Store path or URL to the file in Firebase Storage
       });
       console.log('Document written with ID: ', docRef.id);
@@ -127,6 +140,39 @@
     <label for="eventFlyer">Digital Flyer/Poster:</label>
     <input id="eventFlyer" type="file" on:change={handleFileChange}>
 
-    <button class="submit-button" type="submit">Submit</button>
+    <!-- Inside the form in your existing Svelte component -->
+<label for="eventCategory">*Category:</label>
+<select id="eventCategory" bind:value={eventCategory} required>
+  <option value="" disabled selected>Select category</option>
+  <!-- Loop through an array of categories -->
+  {#each categories as category}
+    <option value="{category}">{category}</option>
+  {/each}
+</select>
+
+<label for="eventHost">*Organizer:</label>
+<input id="eventHost" type="text" bind:value={eventHost} required>
+
+<label for="eventSchool">*School:</label>
+<select id="eventSchool" bind:value={eventSchool} required>
+  <option value="" disabled selected>Select school</option>
+  <!-- Loop through an array of schools -->
+  {#each schools as school}
+    <option value="{school}">{school}</option>
+  {/each}
+</select>
+
+<label for="eventType">*Type:</label>
+<select id="eventType" bind:value={eventType} required>
+  <option value="" disabled selected>Select type</option>
+  <!-- Loop through an array of event types -->
+  {#each eventTypes as type}
+    <option value="{type}">{type}</option>
+  {/each}
+</select>
+
+    <div>
+      <button class="submit-button" type="submit">Submit</button>
+    </div>
   </form>
 </div>

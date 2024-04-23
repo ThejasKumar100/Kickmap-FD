@@ -32,7 +32,6 @@
 </script>
 
 <style>
-    /* Add your CSS styles here */
     .navbar {
         background-color: #EC7524;
         padding: 20px;

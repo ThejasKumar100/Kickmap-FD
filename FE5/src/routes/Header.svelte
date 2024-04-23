@@ -8,11 +8,13 @@
 
 <header>
 	<!-- Created a Svelte icon and link-jump in top left corner -->
+	
 	<div class="corner">
 		<a href="/createEvent">
 			<img src={plusPic} alt="CreateEvent" />
 		</a>
 	</div>
+	
 
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
