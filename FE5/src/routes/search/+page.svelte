@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { PageData } from '../$types';  
+  import type { PageData } from '../$types'; 
+  import { onMount } from 'svelte'; 
   import { db } from '../../firebaseConfig';
   import { collection, query, where, getDocs } from 'firebase/firestore';
 

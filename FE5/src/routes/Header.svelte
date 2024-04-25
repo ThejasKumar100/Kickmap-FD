@@ -8,13 +8,13 @@
 
 <header>
 	<!-- Created a Svelte icon and link-jump in top left corner -->
-	
+	<!-- /* 
 	<div class="corner">
 		<a href="/createEvent">
 			<img src={plusPic} alt="CreateEvent" />
 		</a>
 	</div>
-	
+	 -->
 
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
@@ -51,6 +51,11 @@
 			<!-- Org Page -->
 			<li aria-current={$page.url.pathname === '/orgs' ? 'page' : undefined}>
 				<a href="/orgs">Organizations</a>
+			</li>
+
+			<!-- Event Page -->
+			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
+				<a href="/events">Events</a>
 			</li>
 			
 			
