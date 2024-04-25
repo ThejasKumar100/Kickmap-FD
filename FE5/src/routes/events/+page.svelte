@@ -1,10 +1,8 @@
 <script lang="ts">
-    import type { PageData } from './$types'; 
-    import { onMount } from 'svelte';
-    import { initializeApp } from 'firebase/app';
-    import { getFirestore, collection, getDocs } from 'firebase/firestore';
-    import { db } from '../../firebaseConfig';
-  
+ import type { PageData } from '../$types';  
+  import { db } from '../../firebaseConfig';
+  import { collection, query, where, getDocs } from 'firebase/firestore';
+   
     interface Event {
     title: string;
     description: string;
@@ -19,7 +17,7 @@
   let selectedType: string = '';
   let selectedLocation: string = '';
   let selectedCategory: string = '';
-  let events: Event[] = [];
+  let events: any[] = [];
 
   let q = query(collection(db, 'events'));
   const querySnapshot = await getDocs(q);
