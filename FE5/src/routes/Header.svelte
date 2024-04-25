@@ -55,7 +55,7 @@
 
 			<!-- Events Page -->
 			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
-				<a href="/orgs">Events</a>
+				<a href="/events">Events</a>
 			</li>
 			
 			<!-- Example -->
