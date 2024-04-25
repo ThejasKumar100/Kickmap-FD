@@ -52,7 +52,11 @@
 			<li aria-current={$page.url.pathname === '/orgs' ? 'page' : undefined}>
 				<a href="/orgs">Organizations</a>
 			</li>
-			
+
+			<!-- Events Page -->
+			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
+				<a href="/orgs">Events</a>
+			</li>
 			
 			<!-- Example -->
 			<!-- <li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
