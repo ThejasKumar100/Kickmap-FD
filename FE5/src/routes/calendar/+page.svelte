@@ -2,6 +2,11 @@
     import { onMount } from 'svelte';
     let currentDate = new Date();
     let selectedDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     type Events = {
         [key: string]: string[];
@@ -25,6 +30,32 @@
             selectDate(date);
         }
     }
+
+    function incrementMonth(): void {
+        if (currentMonth === 11) {
+            currentMonth = 0;
+            currentYear++;
+        } else {
+            currentMonth++;
+        }
+    }
+
+    function decrementMonth(): void {
+        if (currentMonth === 0) {
+            currentMonth = 11;
+            currentYear--;
+        } else {
+            currentMonth--;
+        }
+    }
+
+    function daysInMonth(month: number, year: number): number {
+        return new Date(year, month + 1, 0).getDate();
+    }
+
+    function startDayOfMonth(month: number, year: number): number {
+        return new Date(year, month, 1).getDay();
+    }
 </script>
 
 <style>
@@ -36,6 +67,19 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .navbar button {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.navbar button:hover {
+    background-color: darkorange;
+}
 
     body {
         margin: 0;
@@ -66,14 +110,8 @@
         cursor: pointer;
     }
 
-    .day:hover {
-        background-color: #f0f0f0;
-    }
-
-    button.day {
-        border: none;
-        background: none;
-        cursor: pointer;
+    .day:hover, .day.selected {
+        background-color: #EC7524;
     }
 
     .events {
@@ -91,20 +129,30 @@
     }
 </style>
 
-<body>
 <div class="navbar">
     <div>Calendar Events</div>
+    <div>
+        <button on:click="{decrementMonth}">Prev</button>
+        <span>{monthNames[currentMonth]} {currentYear}</span>
+        <button on:click="{incrementMonth}">Next</button>
+    </div>
 </div>
 
 <div class="calendar-container">
     <div class="calendar">
-        {#each Array(30) as _, i}
-            <button class="day" 
-                    on:click={() => selectDate(formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), i+1)))} 
-                    on:keydown={(event) => handleKeyDown(event, formatDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), i+1)))}
-                    tabindex="0">
-                {i+1}
-            </button>
+        {#each dayNames as dayName}
+            <div>{dayName}</div>
+        {/each}
+        {#each Array(startDayOfMonth(currentMonth, currentYear)) as _, i}
+            <div class="day"></div> <!-- Empty cells for days before the first of the month -->
+        {/each}
+        {#each Array(daysInMonth(currentMonth, currentYear)) as _, day (day)}
+            <div class="day" class:selected={formatDate(new Date(currentYear, currentMonth, day + 1)) === formatDate(selectedDate)}
+                 on:click={() => selectDate(formatDate(new Date(currentYear, currentMonth, day + 1)))}
+                 on:keydown={event => handleKeyDown(event, formatDate(new Date(currentYear, currentMonth, day + 1)))}
+                 tabindex="0">
+                {day + 1}
+            </div>
         {/each}
     </div>
     <div class="events">
@@ -118,4 +166,3 @@
         {/if}
     </div>
 </div>
-</body>
