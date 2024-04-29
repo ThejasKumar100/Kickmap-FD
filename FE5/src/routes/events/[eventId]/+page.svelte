@@ -1,25 +1,34 @@
 <script lang="ts">
-    export let eventTitle: string;
-    export let eventDateTime: string;
-    export let hostOrganization: string;
-    export let aboutEvent: string;
-    export let location: string;
-    export let imageUrl: string; // URL to the event image or flyer
+  export let eventTitle: string;
+  export let eventDateTime: string; // Ensure this is in ISO format
+  export let hostOrganization: string;
+  export let aboutEvent: string;
+  export let location: string;
+  export let imageUrl: string;
 
-    import { page } from '$app/stores';
-    const { eventId } = $page.params;
+  import { page } from '$app/stores';
+  const { eventId } = $page.params;
 
-  
-    // Placeholder functions for button interactions
-    const saveEvent = () => {
-      console.log("Event saved");
-    };
-  
-    const registerForEvent = () => {
-      console.log("Registered for event");
-    };
+  // Define the function outside of the reactive context
+  function getEndTime(dateTime: string): string {
+      const eventDate = new Date(dateTime);
+      eventDate.setHours(eventDate.getHours() + 1);
+      return eventDate.toISOString();
+  }
 
-  </script>
+  // Use a reactive declaration to recalculate eventEndTime when eventDateTime changes
+  $: eventEndTime = eventDateTime ? getEndTime(eventDateTime) : '';
+
+  const saveEvent = (): void => {
+    console.log("Event saved");
+  };
+
+  const registerForEvent = (): void => {
+    console.log("Registered for event");
+  };
+</script>
+
+
   
   <style>
     .event-page-container {
@@ -122,9 +131,12 @@
   <div class="event-page-container">
     <div class="event-info">
       <div class="event-title">{eventTitle}</div>
-      <div class="event-datetime">{eventDateTime}</div>
-      <!-- svelte-ignore a11y-missing-attribute -->
-      <div class="google-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2344.131842429011!2d-96.75440184300965!3d32.98710984088319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c21ff4fd32b6b%3A0x47bf5a0a77a83491!2sTI%20Auditorium!5e0!3m2!1sen!2sus!4v1713119821660!5m2!1sen!2sus" width="600" height="450" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="event-datetime">
+        Start: {eventDateTime ? new Date(eventDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBA'}<br>
+        End: {eventEndTime ? new Date(eventEndTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBA'}
+      </div>      
+      <div class="google-map">
+          <!-- Existing map iframe -->
       </div>
       <div class="about-event">
         <strong>About the Event:</strong>
@@ -145,4 +157,4 @@
         No image provided.
       </div>
     </div>
-  </div>
+</div>

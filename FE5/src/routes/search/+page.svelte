@@ -15,7 +15,9 @@
   let events: any[] = [];
 
   // Function to handle the form submission
+
   const searchEvents = async () => {
+
     let q = query(collection(db, 'events'));
     if (keyword) {
       q = query(q, where("eventName", "==", keyword));
@@ -33,7 +35,6 @@
       q = query(q, where("eventCategory", "==", selectedCategory));
     }
 
-    if (q == null) alert('Error submitting event.');
 
     const querySnapshot = await getDocs(q);
     events = querySnapshot.docs.map(doc => doc.data());
