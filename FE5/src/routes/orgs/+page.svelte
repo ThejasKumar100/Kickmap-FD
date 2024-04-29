@@ -1,13 +1,16 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { initializeApp } from 'firebase/app';
-    import { getFirestore, collection, getDocs } from 'firebase/firestore';
-    import { db } from '../../firebaseConfig';
-  
-    interface Event {
+  import { onMount } from 'svelte';
+  import { browser } from '$app/environment'; 
+  import { goto } from '$app/navigation';
+  import { initializeApp } from 'firebase/app';
+  import { getFirestore, collection, getDocs } from 'firebase/firestore';
+  import { db } from '../../firebaseConfig';
+
+  interface Event {
     title: string;
     description: string;
     location: string;
+    orgLink: string;
   }
 
   let events: Event[] = [];
@@ -15,8 +18,17 @@
   onMount(async () => {
     const eventsCol = collection(db, 'orgs');
     const eventSnapshot = await getDocs(eventsCol);
-    events = eventSnapshot.docs.map(doc => doc.data() as Event);
+    events = eventSnapshot.docs.map(doc => ({
+      ...doc.data(),
+      orgLink: doc.data().orgLink
+    }) as Event);
   });
+
+  function navigateToDetails(orgLink: string) {
+    if (browser) {
+      goto(orgLink);
+    }
+  }
   </script>
   
   <!-- Styling -->
@@ -34,7 +46,7 @@
       margin: 10px;
       border-radius: 8px;
     }
-    .button-primary {
+    .more-button {
       /* position: center; */
       margin: 0 auto;
       display: block;
@@ -48,7 +60,6 @@
     }
   </style>
   
-  <!-- HTML Template -->
   <div class="events-container">
     {#each events as event}
       <div class="event-card">
@@ -56,7 +67,7 @@
         <p>{event.description}</p>
         <span>Location: {event.location}</span>
         <div>
-          <button class="button-primary">More Details</button>
+          <a href="{event.orgLink}" target="_blank" class="more-button">More Details</a>
         </div>
       </div>
     {/each}

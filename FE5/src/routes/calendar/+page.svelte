@@ -15,8 +15,7 @@
     const events: Events = {
         '2024-04-18': ['ACM workshop @ 6 pm - Location: ECSW', 'Free Pizza @ 3pm - Location: HH'],
         '2024-04-20': ['Coffee & Internships @ 4 pm - Location: JSOM', 'Smoothie Food Truck @ 2 pm - Location: Plinth'],
-        
-    };
+    }; 
 
     function formatDate(date: Date): string {
         return date.toISOString().slice(0, 10);
