@@ -15,7 +15,9 @@
   let events: any[] = [];
 
   // Function to handle the form submission
+
   const searchEvents = async () => {
+try {
     let q = query(collection(db, 'events'));
     if (keyword) {
       q = query(q, where("eventName", "==", keyword));
@@ -34,15 +36,9 @@
     }
 
 //added stuff begin
-    try {
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // Process each document if needed
-      events.push(doc.data());
-    });
   } catch (error) {
     alert('Error submitting event.');
-    console.error('Error executing query:', error);
+    console.error('Error submitting query:', error);
   }
 //added stuff ended
 
