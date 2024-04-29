@@ -183,7 +183,6 @@ select {
       <p>{event.eventLocation}</p>
       <p>{event.eventDescription}</p>
       <p>{event.eventCategory}</p>
-      <p>{event.eventLocation}</p>
       <p>{event.eventRSVPLink}</p>
       <p>{event.eventSchool}</p>
       <p>{event.eventTime}</p>
