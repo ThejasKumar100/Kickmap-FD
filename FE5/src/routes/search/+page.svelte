@@ -33,7 +33,18 @@
       q = query(q, where("eventCategory", "==", selectedCategory));
     }
 
-    if (q == null) alert('Error submitting event.');
+//added stuff begin
+    try {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // Process each document if needed
+      events.push(doc.data());
+    });
+  } catch (error) {
+    alert('Error submitting event.');
+    //console.error('Error executing query:', error);
+  }
+//added stuff ended
 
     const querySnapshot = await getDocs(q);
     events = querySnapshot.docs.map(doc => doc.data());
