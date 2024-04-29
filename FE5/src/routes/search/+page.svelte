@@ -32,6 +32,9 @@
     if (selectedCategory) {
       q = query(q, where("eventCategory", "==", selectedCategory));
     }
+
+    if (q == null) alert('Error submitting event.');
+
     const querySnapshot = await getDocs(q);
     events = querySnapshot.docs.map(doc => doc.data());
   };
