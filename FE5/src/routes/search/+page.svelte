@@ -32,6 +32,20 @@
     if (selectedCategory) {
       q = query(q, where("eventCategory", "==", selectedCategory));
     }
+
+//added stuff begin
+    try {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // Process each document if needed
+      events.push(doc.data());
+    });
+  } catch (error) {
+    alert('Error submitting event.');
+    console.error('Error executing query:', error);
+  }
+//added stuff ended
+
     const querySnapshot = await getDocs(q);
     events = querySnapshot.docs.map(doc => doc.data());
   };
@@ -183,7 +197,6 @@ select {
       <p>{event.eventLocation}</p>
       <p>{event.eventDescription}</p>
       <p>{event.eventCategory}</p>
-      <p>{event.eventLocation}</p>
       <p>{event.eventRSVPLink}</p>
       <p>{event.eventSchool}</p>
       <p>{event.eventTime}</p>
