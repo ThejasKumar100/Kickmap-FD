@@ -13,8 +13,11 @@
     };
 
     const events: Events = {
-        '2024-04-18': ['ACM workshop @ 6 pm - Location: ECSW', 'Free Pizza @ 3pm - Location: HH'],
+        '2024-03-19': ['SQL workshop @ 6 pm - Location: ECSS 2.412'],
         '2024-04-20': ['Coffee & Internships @ 4 pm - Location: JSOM', 'Smoothie Food Truck @ 2 pm - Location: Plinth'],
+        '2024-03-21': ['Game Night Social @ 7pm - Location: ECSW'],
+        '2024-05-03': ['Seminar @ 6:30 pm - Location: ECSS'],
+
     };
 
     function formatDate(date: Date): string {
