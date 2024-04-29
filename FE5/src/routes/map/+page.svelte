@@ -5,7 +5,7 @@
 
 <div class="text-column">
 	<!-- svelte-ignore a11y-missing-attribute -->
-	<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1tK70OEmtrTxAPkUDnOohMxgzCzz8Z90&ehbc=2E312F&noprof=1" width="640" height="480" class="welcome"></iframe>
+	<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1tK70OEmtrTxAPkUDnOohMxgzCzz8Z90&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>
 	
 	<h1>Find your events on a Map!</h1>
 
