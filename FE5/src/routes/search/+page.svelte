@@ -42,7 +42,7 @@
     });
   } catch (error) {
     alert('Error submitting event.');
-    //console.error('Error executing query:', error);
+    console.error('Error executing query:', error);
   }
 //added stuff ended
 
