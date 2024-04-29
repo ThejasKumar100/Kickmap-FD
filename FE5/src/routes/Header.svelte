@@ -43,10 +43,11 @@
 				<a href="/calendar">Calendar</a>
 			</li>
 
-			<!-- Create Event -->
+			<!-- Create Event 
 			<li aria-current={$page.url.pathname === '/createEvent' ? 'page' : undefined}>
 				<a href="/createEvent">Create</a>
 			</li>
+			-->
 
 			<!-- Org Page -->
 			<li aria-current={$page.url.pathname === '/orgs' ? 'page' : undefined}>
